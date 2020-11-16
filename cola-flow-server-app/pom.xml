@@ -1,0 +1,52 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.github.assembledflow</groupId>
+        <artifactId>cola-flow-server</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+	</parent>
+	<artifactId>cola-flow-server-app</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<dependencies>
+		<dependency>
+			<groupId>com.github.assembledflow</groupId>
+			<artifactId>cola-flow-server-client</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.assembledflow</groupId>
+			<artifactId>cola-flow-server-infrastructure</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+		<!-- JSR 303 Validation -->
+		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.el</groupId>
+			<artifactId>javax.el-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.web</groupId>
+			<artifactId>javax.el</artifactId>
+		</dependency>
+
+		<!-- JSR 303 Validation End-->
+
+	</dependencies>
+
+	<build>
+			<pluginManagement>
+					<plugins>
+							<plugin>
+								<artifactId>maven-deploy-plugin</artifactId>
+								<configuration>
+									<skip>true</skip>
+								</configuration>
+							</plugin>
+					</plugins>
+			</pluginManagement>
+	</build>
+</project>
