@@ -5,7 +5,8 @@
 
 簡單描述下背景  
 COLA是DDD領域驅動框架，提供了DDD、CQRS、擴展點等功能和規範，具有很好的學習和使用價值  
-基于COLA規範，實施過程中可能會遇到以下几方面的問題： 
+基于COLA規範，實施過程中可能會遇到以下几方面的問題：   
+
 1，一個業務流程可能有好幾個步驟需要執行，可以封裝為Event執行，或者代碼組裝Event執行流程，但是過程執行失敗怎麽處理?  
 2，Event粒度拆分問題，粒度細的話邏輯更清晰，粒度粗的話代碼更簡單  
 3，一個業務流程中可能需要修改多個業務數據，并且需要保證修改的一致性  
@@ -16,4 +17,13 @@ COLA是DDD領域驅動框架，提供了DDD、CQRS、擴展點等功能和規範
 3，抽象業務身份和節點Event的關係，通過業務身份去串聯節點Event流程鏈  
 4，實現節點Event和流程鏈的管理，後續可實現動態調整或新增節點Event，以快速支持不同行業（業務場景）的目的  
 
-架構設計和使用姿勢待後續補充
+架構設計和使用姿勢   
+业务流程链逻辑图  
+![image](https://github.com/doufuche/cola-flow-server/blob/main/imagesForReadme/%E4%B8%9A%E5%8A%A1%E6%B5%81%E7%A8%8B%E9%93%BE%E9%80%BB%E8%BE%91%E5%9B%BE.png)
+
+上面流程链示意图中，流程1数据的定义需要业务自己配置实现，将定义好的输入传入ColaEventFlowServiceI.eventFlowInit()方法既可  
+需注意：业务流程定义中用到的class，定义在@Value("${eventFlow.classes.config}")，格式如下：  
+{"StartEvent":"com.github.cola.flow.client.baseevent.StartEvent","EndEvent":"com.github.cola.flow.client.baseevent.EndEvent"}  
+
+
+
