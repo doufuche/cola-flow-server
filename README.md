@@ -26,5 +26,58 @@ COLA是DDD領域驅動框架，提供了DDD、CQRS、擴展點等功能和規範
 需注意：业务流程定义中用到的class，定义在@Value("${eventFlow.classes.config}")，格式如下：  
 {"StartEvent":"com.github.cola.flow.client.baseevent.StartEvent","EndEvent":"com.github.cola.flow.client.baseevent.EndEvent"}  
 
+系统架构图.   
+![contents](./imagesForReadme/%E5%B9%B3%E5%8F%B0%E5%8C%96.png)    
+
+流程引擎核心设计  
+![contents](./imagesForReadme/DAG.png)    
+
+项目中如何使用流程引擎  
+<dependency>    
+   <groupId>com.github.assembledflow</groupId>
+   <artifactId>cola-flow-server</artifactId>
+   <version>1.0.0-SNAPSHOT</version>
+</dependency>
+  
+Event节点对象定义
+参考com.github.cola.flow.client.baseevent.StartEvent ,
+需继承com.github.cola.flow.client.baseevent.FlowBaseEvent
+  
+Event节点监听定义  
+参考com.github.cola.flow.server.app.eventhandler.EventFlowDeleteHandler，
+需将implements EventHandlerI 改为 extends BaseEventFlowExecutor
+
+BaseEventFlowExecutor定义    
+1, 判断该节点是否执行完成  
+2, 检查该订单是否已取消，是则终止流程  
+3, 判断业务流程中，当前执行Event节点是否暂停节点，是则暂停流程；这时等待业务流程触发继续执行，下篇介绍   
+4, 执行业务流程中，当前Event节点   
+5, 记录流程执行结果，包括异常情况(异常会定时任务自动重试)   
+6, 继续执行业务流程   
+
+
+流程暂停Event处理  
+前面"到店自提业务流程链" 讲过当前执行Event节点是暂停节点，则暂停流程；这时等待业务流程触发继续执行，  
+调用ColaEventFlowServiceI.continueEventFlow(FlowBaseEvent suspendEvent) 即可触发流程继续执行  
+注意设置deliveryStateReturnSuspendEvent.setExecuted(Boolean.TRUE);     表示该event可跳过了   
+
+
+关于测试.  
+单元测试   
+1，单元测试时，如正向流程串联没有业务暂停场景的，下单时参数获取从当前event对象中获取startEvent对象，startEvent对象 即下单时参数对象，然后单元测试可自行构造该对象去执行业务逻辑  
+   代码: StartEvent startEvent = (StartEvent)endEvent.getStartEvent();  
+
+流程测试  
+1，正向流程串联测试，定义流程信息eventFlowInfo，然后执行colaEventFlowService.eventFlowInit方法即可
+
+2，业务暂停场景串联测试，上一步执行的流程中包含业务暂停场景Event，然后执行到该Event时业务流程会暂停，此时调用该测试中colaEventFlowService.continueEventFlow方法即可，入参是该业务暂停场景Event对象
+
+
+
+
+
+
+ 
+
 
 
