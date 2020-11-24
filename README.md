@@ -19,18 +19,20 @@ COLA是DDD領域驅動框架，提供了DDD、CQRS、擴展點等功能和規範
 
 # 架構設計和使用姿勢   
 ## 业务流程链逻辑图  
-![contents](./imagesForReadme/%E4%B8%9A%E5%8A%A1%E6%B5%81%E7%A8%8B%E9%93%BE%E9%80%BB%E8%BE%91%E5%9B%BE.png)
+![alt](https://github.com/doufuche/cola-flow-server/blob/main/imagesForReadme/%E4%B8%9A%E5%8A%A1%E6%B5%81%E7%A8%8B%E9%93%BE%E9%80%BB%E8%BE%91%E5%9B%BE.png)
 
 
 上面流程链示意图中，流程1数据的定义需要业务自己配置实现，将定义好的输入传入ColaEventFlowServiceI.eventFlowInit()方法既可  
 需注意：业务流程定义中用到的class，定义在@Value("${eventFlow.classes.config}")，格式如下：  
 {"StartEvent":"com.github.cola.flow.client.baseevent.StartEvent","EndEvent":"com.github.cola.flow.client.baseevent.EndEvent"}  
 
-## 系统架构图.   
-![contents](./imagesForReadme/%E5%B9%B3%E5%8F%B0%E5%8C%96.png)    
+## 系统架构图.  
+
+![alt](https://github.com/doufuche/cola-flow-server/blob/main/imagesForReadme/%E5%B9%B3%E5%8F%B0%E5%8C%96.png)    
 
 ## 流程引擎核心设计  
-![contents](./imagesForReadme/DAG.png)    
+
+![alt](https://github.com/doufuche/cola-flow-server/blob/main/imagesForReadme/DAG.png)    
 
 ## 项目中如何使用流程引擎  
 ```
